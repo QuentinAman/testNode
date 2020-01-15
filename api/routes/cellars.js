@@ -21,7 +21,6 @@ router.get('/', (req, res, next) => {
         })
 });
 
-
 router.post('/create', (req, res, next) => {
     const cellar = new Cellar({
         _id: mongoose.Types.ObjectId(),

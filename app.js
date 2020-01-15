@@ -22,7 +22,6 @@ const users_routes = require('./api/routes/users');
 const cellars_routes = require('./api/routes/cellars');
 const bottles_routes = require('./api/routes/bottles');
 
-
 //Définition de toutes les routes
 app.use('/users', users_routes);
 app.use('/cellars', cellars_routes);
@@ -35,7 +34,6 @@ app.use((req, res, next) => {
     error.status = 404;
     next(error);
 })
-
 
 //Gestion de la callback next
 app.use((error, req, res, next) => {
