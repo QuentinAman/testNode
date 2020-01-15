@@ -18,16 +18,14 @@ app.use(body_parser.json());
 app.use(morgan('dev'));
 
 // Handling routes
-const user_routes = require('./api/routes/user');
+const users_routes = require('./api/routes/users');
 const cellars_routes = require('./api/routes/cellars');
-const account_routes = require('./api/routes/account');
 const bottles_routes = require('./api/routes/bottles');
 
 
 //Définition de toutes les routes
-app.use('/user', user_routes);
+app.use('/users', users_routes);
 app.use('/cellars', cellars_routes);
-app.use('/account', account_routes);
 app.use('/bottles', bottles_routes);
 
 
