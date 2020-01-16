@@ -1,66 +1,18 @@
 const express = require('express');
 const router = express.Router();
+const checkAuth = require('../middlewares/check-auth');
+const cellarsController = require('../controllers/cellars');
 
-const mongoose = require('mongoose');
-const Cellar = require('../models/cellar');
+//Affichage de la liste des cave d'un utilsateur
+router.get('/', checkAuth, cellarsController.display_all_cellars);
 
-router.get('/', (req, res, next) => {
-    Cellar.find()
-        .then(result => {
-            console.log(result);
-            res.status(200).json({
-                message: "Toutes vos caves",
-                listCellar: result
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                error: err
-            })
-        })
-});
+//Création d'une cave dans la bdd
+router.post('/create', checkAuth, cellarsController.create_cellar);
 
-router.post('/create', (req, res, next) => {
-    const cellar = new Cellar({
-        _id: mongoose.Types.ObjectId(),
-        name: req.body.name,
-        maxContent: 46
-    });
+//Suppression d'une cave de la bdd
+router.delete('/:idCellar', checkAuth, cellarsController.delete_cellar);
 
-    cellar.save()
-        .then(message => {
-            console.log(message);
-            res.status(201).json({
-                message: "Creation de la cave réussie",
-                newCellar: message
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                message: "Une erreur est survenue",
-                error: err
-            })
-        });
-})
-
-router.delete('/:idCellar', (req, res, next) => {
-    Cellar.remove({ _id: req.params.idCellar })
-        .then(result => {
-            console.log(result);
-            res.status(202).json({
-                message: "La cave a été supprimée.",
-                result: result
-            })
-        })
-        .catch(err => {
-            console.log(err);
-            res.status(500).json({
-                message: "Une erreur est survenue.",
-                err: err
-            })
-        })
-})
+//Modification d'une cave dans la base de données.
+router.patch('/:idCellar', checkAuth, cellarsController.update_cellar);
 
 module.exports = router;

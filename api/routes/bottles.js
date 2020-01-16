@@ -1,31 +1,21 @@
 const express = require('express');
 const router = express.Router();
+const checkAuth = require('../middlewares/check-auth');
+const bottlesController = require('../controllers/bottles');
 
-const mongoose = require('mongoose');
-const Bottle = require('../models/bottle');
+//Affichage de toutes les bouteilles de la bdd
+router.get('/', checkAuth, bottlesController.display_all_bottles);
 
-router.get('/', (req, res, next) => {
-    res.status(200).json({
-        message: "Affichage de toutes les bouteilles de la bdd."
-    })
-})
+//Affichage d'une bouteille en fonction de son id
+router.get('/:idBottle', checkAuth, bottlesController.display_one_bottle);
 
-router.post('/', (req, res, next) => {
+//Ajout d'une bouteille dans la bdd
+router.post('/', checkAuth, bottlesController.add_bottle);
 
-    const bottle = new Bottle({
-        _id: new mongoose.Types.ObjectId(),
-        name: req.body.name,
-        domain: req.body.domain,
-        vintage: req.body.vintage,
-        description: req.body.description
-    });
+//Modification d'une bouteille dans la bdd
+router.patch('/:idBottle', checkAuth, bottlesController.update_bottle);
 
-    bottle.save().then(message => console.log(message)).catch(err => console.log(err));
-
-    res.status(200).json({
-        message: "Affichage de toutes les bouteilles de la bdd.",
-        newBottle: bottle
-    })
-});
+//Suppresion d'une bouteille dans la bdd
+router.delete('/:idBottle', checkAuth, bottlesController.delete_bottle);
 
 module.exports = router;

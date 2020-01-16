@@ -6,7 +6,8 @@ const mongoose = require('mongoose');
 mongoose.connect('mongodb+srv://admin:' + process.env.MONGO_ATLAS_PW + '@cluster0-e0vot.mongodb.net/test?retryWrites=true&w=majority',
 {
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useCreateIndex: true
 })
 .then(() => console.log('Connexion à la db réussie'))
 .catch(() => console.log('Connexion à la db échouée'));
