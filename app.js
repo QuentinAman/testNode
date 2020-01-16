@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 
 const mongoose = require('mongoose');
@@ -17,6 +18,7 @@ const morgan = require('morgan');
 
 app.use(body_parser.json());
 app.use(morgan('dev'));
+app.use(cors());
 
 // Handling routes
 const users_routes = require('./api/routes/users');
