@@ -19,6 +19,7 @@ const morgan = require('morgan');
 app.use(body_parser.json());
 app.use(morgan('dev'));
 app.use(cors());
+console.log('bla');
 
 // Handling routes
 const users_routes = require('./api/routes/users');
